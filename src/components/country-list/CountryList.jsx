@@ -1,6 +1,6 @@
 import CountryItem from "./CountryItem";
 
-function CountryList({ allCountries }) {
+function CountryList({ allCountries, setSelectedCountry }) {
   // 3rd run : Render, #10th Re-render
 
   return (
@@ -15,7 +15,11 @@ function CountryList({ allCountries }) {
       <div className="country">
         {allCountries.length > 0 &&
           allCountries.map((country) => (
-            <CountryItem key={country.name.official} country={country} />
+            <CountryItem
+              key={country.name.official}
+              country={country}
+              setSelectedCountry={setSelectedCountry}
+            />
           ))}
       </div>
     </main>

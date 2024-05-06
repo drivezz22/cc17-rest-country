@@ -32,15 +32,14 @@ function App() {
         obj.flags = country.flags;
         obj.region = country.region;
         obj.population = country.population;
-        obj.capital = country.capital;
+        obj.capital = country.capital || [];
         obj.languages = country.languages;
-        obj.borders = country.borders;
+        obj.borders = country.borders || [];
         obj.currencies = country.currencies;
         return obj;
       });
       // 7th : setState
       setAllCountries(data);
-      setSelectedCountry(data[0]);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +47,7 @@ function App() {
 
   return (
     <div className="app">
-      <CountryList allCountries={allCountries} setAllCountries={setAllCountries} />
+      <CountryList allCountries={allCountries} setSelectedCountry={setSelectedCountry} />
       <CountryDetail selectedCountry={selectedCountry} />
       <BucketList />
     </div>
