@@ -28,14 +28,15 @@ function App() {
         // Obj response => Obj {name:Name,flags:Flags}
         // 6th run
         let obj = {};
-        obj.name = country.name;
-        obj.flags = country.flags;
+        obj.name = country.name || {};
+        obj.flags = country.flags || {};
         obj.region = country.region;
         obj.population = country.population;
         obj.capital = country.capital || [];
-        obj.languages = country.languages;
+        obj.languages = country.languages || {};
         obj.borders = country.borders || [];
-        obj.currencies = country.currencies;
+        obj.currencies = country.currencies || {};
+        obj.latlng = country.latlng;
         return obj;
       });
       // 7th : setState
