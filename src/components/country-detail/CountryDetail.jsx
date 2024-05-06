@@ -1,9 +1,32 @@
-import React from "react";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import CountryMap from "./CountryMap";
 
-function CountryDetail({ selectedCountry }) {
+function CountryDetail({ selectedCountry, bucketText, setBuckerText, buckerList, setBuckerList }) {
   const [lat, lng] = selectedCountry?.latlng || [];
+
+  useEffect(() => {
+    setBuckerText("");
+  }, [selectedCountry]);
+
+  const handleBuckerText = (e) => {
+    setBuckerText(e.target.value);
+  };
+
+  const updataBucketList = (e) => {
+    e.preventDefault();
+    if (bucketText.trim !== "" && selectedCountry !== null) {
+      const filterData = buckerList.filter((b) => b.name === selectedCountry.name.common);
+
+      if (filterData.length === 0) {
+        const newData = { name: selectedCountry.name.common, text: bucketText };
+        setBuckerList([...buckerList, newData]);
+        setBuckerText("");
+      }
+    }
+  };
+
   return (
     <section className="detail">
       <>
@@ -14,14 +37,20 @@ function CountryDetail({ selectedCountry }) {
               <p>
                 <span className="detail__text--name">
                   {" "}
-                  Region : <span>{selectedCountry?.region}</span>
+                  Region : <span>{selectedCountry?.region || ""}</span>
                 </span>
               </p>
               <p>
                 <span className="detail__text--name">
                   {" "}
                   Population :{" "}
-                  <span>{new Intl.NumberFormat().format(selectedCountry?.population)}</span>
+                  <span>{new Intl.NumberFormat().format(selectedCountry?.population || 0)}</span>
+                </span>
+              </p>
+              <p>
+                <span className="detail__text--name">
+                  {" "}
+                  Area : <span>{new Intl.NumberFormat().format(selectedCountry?.area || 0)}</span>
                 </span>
               </p>
               <p>
@@ -63,9 +92,9 @@ function CountryDetail({ selectedCountry }) {
               </p>
             </div>
 
-            <form className="detail__form">
+            <form className="detail__form" onSubmit={updataBucketList}>
               <label>Add Bucket List</label>
-              <input />
+              <input value={bucketText} onChange={handleBuckerText} />
               <button>Add </button>
             </form>
           </div>
@@ -81,11 +110,7 @@ function CountryDetail({ selectedCountry }) {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={[lat, lng]}>
-                  <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                  </Popup>
-                </Marker>
+                <CountryMap lat={lat} lng={lng} capital={selectedCountry?.capital || ""} />
               </MapContainer>
             )}
           </div>

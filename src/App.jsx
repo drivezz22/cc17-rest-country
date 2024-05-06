@@ -12,6 +12,12 @@ function App() {
   // 1st run(init), # 8th (allCountries !== [])
   const [allCountries, setAllCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null); // null | Country
+
+  const [bucketText, setBuckerText] = useState("");
+  const [buckerList, setBuckerList] = useState([]);
+
+  const [filterCountries, setFilterCountries] = useState(allCountries); // null | Country
+
   // Fetch เสร็จให้เอาประเทศแรกเป็น selectedCountry
 
   // 4th run : Fetch
@@ -32,6 +38,7 @@ function App() {
         obj.flags = country.flags || {};
         obj.region = country.region;
         obj.population = country.population;
+        obj.area = country.area;
         obj.capital = country.capital || [];
         obj.languages = country.languages || {};
         obj.borders = country.borders || [];
@@ -41,6 +48,7 @@ function App() {
       });
       // 7th : setState
       setAllCountries(data);
+      setFilterCountries(data);
     } catch (error) {
       console.log(error);
     }
@@ -48,9 +56,20 @@ function App() {
 
   return (
     <div className="app">
-      <CountryList allCountries={allCountries} setSelectedCountry={setSelectedCountry} />
-      <CountryDetail selectedCountry={selectedCountry} />
-      <BucketList />
+      <CountryList
+        allCountries={allCountries}
+        setSelectedCountry={setSelectedCountry}
+        filterCountries={filterCountries}
+        setFilterCountries={setFilterCountries}
+      />
+      <CountryDetail
+        selectedCountry={selectedCountry}
+        bucketText={bucketText}
+        setBuckerText={setBuckerText}
+        buckerList={buckerList}
+        setBuckerList={setBuckerList}
+      />
+      <BucketList buckerList={buckerList} setBuckerList={setBuckerList} />
     </div>
   );
 }

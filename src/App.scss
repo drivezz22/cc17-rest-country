@@ -40,6 +40,27 @@
   }
 }
 
+.filter {
+  display: flex;
+  // justify-content: space-evenly;
+  // height: 100%;
+  gap: 10px;
+
+  &__btn {
+    background-color: black;
+    color: white;
+    height: 100%;
+    flex: 1;
+
+    &--selected {
+      background-color: rgb(171, 171, 171);
+      color: black;
+      height: 100%;
+      flex: 1;
+    }
+  }
+}
+
 /* Country grid */
 .country {
   display: grid;
@@ -69,14 +90,14 @@
   background-color: white;
   grid-row: 1 / span 1;
   grid-column: 2 / span 1;
-  padding: 16px;
+  padding: 4px 16px;
   display: flex;
   margin-bottom: 16px;
 
   &__text {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 10px;
     flex: 1;
 
     &--name {
@@ -124,10 +145,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    & > button {
+    & > div > button {
       background-color: darkred;
       color: white;
+      margin: 0 4px;
+    }
+    & > input {
+      height: 32px;
+      flex: 1;
+      margin-right: 20px;
+      text-indent: 12px;
     }
   }
 }
