@@ -5,16 +5,16 @@ import { all } from "axios";
 function CountryList({ allCountries, setSelectedCountry, filterCountries, setFilterCountries }) {
   // 3rd run : Render, #10th Re-render
   const [searchText, setSearchText] = useState("");
-  const [isFilter, setIsFilter] = useState({
-    all: true,
+  const initFilterState = {
+    all: false,
     asia: false,
     europe: false,
-    northAmerica: false,
-    southAmerica: false,
+    americas: false,
     africa: false,
     oceania: false,
     antarctic: false,
-  });
+  };
+  const [isFilter, setIsFilter] = useState(initFilterState);
 
   const handleSearch = () => {
     const filterCountries = allCountries.filter((c) =>
@@ -49,29 +49,66 @@ function CountryList({ allCountries, setSelectedCountry, filterCountries, setFil
       </div>
       <div className="filter">
         <button
-          className={"filter__btn"}
+          className={isFilter["all"] ? "filter__btn--selected" : "filter__btn"}
           onClick={() => {
             filterByRegion("all");
+            setIsFilter(Object.assign(initFilterState, { all: true }));
           }}
         >
           All
         </button>
-        <button className="filter__btn" onClick={() => filterByRegion("Asia")}>
+        <button
+          className={isFilter["asia"] ? "filter__btn--selected" : "filter__btn"}
+          onClick={() => {
+            filterByRegion("Asia");
+            setIsFilter(Object.assign(initFilterState, { asia: true }));
+          }}
+        >
           Asia
         </button>
-        <button className="filter__btn" onClick={() => filterByRegion("Europe")}>
+        <button
+          className={isFilter["europe"] ? "filter__btn--selected" : "filter__btn"}
+          onClick={() => {
+            filterByRegion("Europe");
+            setIsFilter(Object.assign(initFilterState, { europe: true }));
+          }}
+        >
           Europe
         </button>
-        <button className="filter__btn" onClick={() => filterByRegion("Americas")}>
+        <button
+          className={isFilter["americas"] ? "filter__btn--selected" : "filter__btn"}
+          onClick={() => {
+            filterByRegion("Americas");
+            setIsFilter(Object.assign(initFilterState, { americas: true }));
+          }}
+        >
           Americas
         </button>
-        <button className="filter__btn" onClick={() => filterByRegion("Africa")}>
+        <button
+          className={isFilter["africa"] ? "filter__btn--selected" : "filter__btn"}
+          onClick={() => {
+            filterByRegion("Africa");
+            setIsFilter(Object.assign(initFilterState, { africa: true }));
+          }}
+        >
           Africa
         </button>
-        <button className="filter__btn" onClick={() => filterByRegion("Oceania")}>
+        <button
+          className={isFilter["oceania"] ? "filter__btn--selected" : "filter__btn"}
+          onClick={() => {
+            filterByRegion("Oceania");
+            setIsFilter(Object.assign(initFilterState, { oceania: true }));
+          }}
+        >
           Oceania
         </button>
-        <button className="filter__btn" onClick={() => filterByRegion("Antarctic")}>
+        <button
+          className={isFilter["antarctic"] ? "filter__btn--selected" : "filter__btn"}
+          onClick={() => {
+            filterByRegion("Antarctic");
+            setIsFilter(Object.assign(initFilterState, { antarctic: true }));
+          }}
+        >
           Antarctic
         </button>
       </div>

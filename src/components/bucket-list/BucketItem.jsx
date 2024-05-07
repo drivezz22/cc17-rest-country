@@ -14,14 +14,12 @@ function BucketItem({ data, buckerList, setBuckerList }) {
       setIsEdit(true);
       setNewText((d) => data.text);
     } else {
-      console.log("newText", newText);
       const newData = buckerList.map((c) => {
         if (c.name === data.name) {
           return { ...c, text: newText };
         }
         return c;
       });
-      console.log(newData);
       setBuckerList(newData);
       setIsEdit(false);
     }
